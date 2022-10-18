@@ -4,11 +4,12 @@ namespace SimpleSerialManager
 {
     public class SimplePort
     {
-        SerialPort _serialPort = new SerialPort();
+        SerialPort SerialPort = new SerialPort();
+        string ReceivedData = "";
 
         public bool IsOpen
         {
-            get => _serialPort.IsOpen;
+            get => SerialPort.IsOpen;
         }
 
         public static string[] GetAvailablePorts()
@@ -25,13 +26,13 @@ namespace SimpleSerialManager
         {
             var avaiblePortsList = GetAvailablePortsList();
             if (avaiblePortsList.Contains(portName)){
-                _serialPort.PortName = portName;
-                _serialPort.BaudRate = bauds;
-                _serialPort.DataBits = 8;
-                _serialPort.StopBits = StopBits.One;
+                SerialPort.PortName = portName;
+                SerialPort.BaudRate = bauds;
+                SerialPort.DataBits = 8;
+                SerialPort.StopBits = StopBits.One;
                 //_serialPort.DataReceived += eventFunc;
-                _serialPort.ReadTimeout = 500;
-                _serialPort.WriteTimeout = 500;
+                SerialPort.ReadTimeout = 500;
+                SerialPort.WriteTimeout = 500;
 
                 //TODO: Add delegate for received data
                 return true;
@@ -44,29 +45,29 @@ namespace SimpleSerialManager
         {
             if (IsOpen)
             {   //TODO: Remove delegate for received data before closing port
-                _serialPort.Close();
+                SerialPort.Close();
             }
             
         }
 
         public void SendLine(string data)
         {
-            _serialPort.WriteLine(data);
+            SerialPort.WriteLine(data);
         }
 
         public void Send(byte[] buffer, int offset, int count)
         {
-            _serialPort.Write(buffer, offset, count);
+            SerialPort.Write(buffer, offset, count);
         }
 
         public void Send(char[] buffer, int offset, int count)
         {
-            _serialPort.Write(buffer, offset, count);
+            SerialPort.Write(buffer, offset, count);
         }
 
         public void Send(string data)
         {
-            _serialPort.Write(data);
+            SerialPort.Write(data);
         }
     }
 }
