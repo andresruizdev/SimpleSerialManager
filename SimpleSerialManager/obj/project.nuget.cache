@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "Eb5SbVDRx7MFI7Ee5ff6pnAhhzkOoAr7fT6tAtxYCUKw1WgKs0uYun3uKObTsrvqQ1TKNGFbXk039BcMeuzp4g==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\SistemasC\\Documents\\GitHub\\SimpleSerialManager\\SimpleSerialManager\\SimpleSerialManager.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\SistemasC\\.nuget\\packages\\runtime.linux-arm.runtime.native.system.io.ports\\6.0.0\\runtime.linux-arm.runtime.native.system.io.ports.6.0.0.nupkg.sha512",
+    "C:\\Users\\SistemasC\\.nuget\\packages\\runtime.linux-arm64.runtime.native.system.io.ports\\6.0.0\\runtime.linux-arm64.runtime.native.system.io.ports.6.0.0.nupkg.sha512",
+    "C:\\Users\\SistemasC\\.nuget\\packages\\runtime.linux-x64.runtime.native.system.io.ports\\6.0.0\\runtime.linux-x64.runtime.native.system.io.ports.6.0.0.nupkg.sha512",
+    "C:\\Users\\SistemasC\\.nuget\\packages\\runtime.native.system.io.ports\\6.0.0\\runtime.native.system.io.ports.6.0.0.nupkg.sha512",
+    "C:\\Users\\SistemasC\\.nuget\\packages\\runtime.osx-arm64.runtime.native.system.io.ports\\6.0.0\\runtime.osx-arm64.runtime.native.system.io.ports.6.0.0.nupkg.sha512",
+    "C:\\Users\\SistemasC\\.nuget\\packages\\runtime.osx-x64.runtime.native.system.io.ports\\6.0.0\\runtime.osx-x64.runtime.native.system.io.ports.6.0.0.nupkg.sha512",
+    "C:\\Users\\SistemasC\\.nuget\\packages\\system.io.ports\\6.0.0\\system.io.ports.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
