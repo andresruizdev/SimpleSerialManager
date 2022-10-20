@@ -1,4 +1,5 @@
-﻿using System.IO.Ports;
+﻿using System.Diagnostics;
+using System.IO.Ports;
 
 namespace SimpleSerialManager
 {
@@ -33,10 +34,16 @@ namespace SimpleSerialManager
                 //_serialPort.DataReceived += eventFunc;
                 SerialPort.ReadTimeout = 500;
                 SerialPort.WriteTimeout = 500;
-
+                SerialPort.Open();
                 //TODO: Add delegate for received data
-                return true;
+                if (IsOpen)
+                {
+                    Debug.WriteLine($"Se abrió correctamente el puerto {portName}");
+                    return true;
+                }
+                    
             }
+            Debug.WriteLine($"No se pudo abrir el puerto {portName}");
             return false;
             
         }
