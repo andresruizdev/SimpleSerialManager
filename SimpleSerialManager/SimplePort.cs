@@ -6,7 +6,8 @@ namespace SimpleSerialManager
     public class SimplePort
     {
         SerialPort SerialPort = new SerialPort();
-        string ReceivedData = "";
+
+        public event EventHandler<ReceivedDataEventArgs> OnDataReceived;
 
         public bool IsOpen
         {
@@ -31,7 +32,7 @@ namespace SimpleSerialManager
                 SerialPort.BaudRate = bauds;
                 SerialPort.DataBits = 8;
                 SerialPort.StopBits = StopBits.One;
-                //_serialPort.DataReceived += eventFunc;
+                SerialPort.DataReceived += SerialPort_DataReceived;
                 SerialPort.ReadTimeout = 500;
                 SerialPort.WriteTimeout = 500;
                 SerialPort.Open();
@@ -48,10 +49,24 @@ namespace SimpleSerialManager
             
         }
 
+        private void SerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            if (IsOpen)
+            {
+                int ReceivedBytes = SerialPort.BytesToRead;
+                byte[] ReceivedDataBytes = new byte[ReceivedBytes];
+                SerialPort.Read(ReceivedDataBytes, 0, ReceivedDataBytes.Length);
+                var ReceivedData = System.Text.Encoding.Default.GetString(ReceivedDataBytes);
+                Debug.Write($"{ReceivedBytes} bytes received from {SerialPort.PortName}: {ReceivedData}");
+                OnDataReceived?.Invoke(this, new ReceivedDataEventArgs(ReceivedBytes, ReceivedData, ReceivedDataBytes));
+            }
+        }
+
         public void Close()
         {
             if (IsOpen)
             {   //TODO: Remove delegate for received data before closing port
+                SerialPort.DataReceived -= SerialPort_DataReceived;
                 SerialPort.Close();
             }
             
