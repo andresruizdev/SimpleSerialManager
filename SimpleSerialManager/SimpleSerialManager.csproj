@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Title>SimpleSerialManager</Title>
+    <Description>Simple package to manage Serial Ports (Only available for windows at moment). You can get available ports, open close and manage received data in your product.</Description>
+    <Copyright>Andres Ruiz © 2022</Copyright>
+    <PackageProjectUrl>https://github.com/andresruizdev/SimpleSerialManager</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.IO.Ports" Version="6.0.0" />
+  </ItemGroup>
+
+</Project>
