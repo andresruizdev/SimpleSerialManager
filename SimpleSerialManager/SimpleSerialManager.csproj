@@ -4,14 +4,23 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Title>SimpleSerialManager</Title>
+	<Authors>Andres Ruiz</Authors>
+	<Version>1.0.1</Version>
+    <Title>Simple Serial Manager</Title>
     <Description>Simple package to manage Serial Ports (Only available for windows at moment). You can get available ports, open close and manage received data in your product.</Description>
     <Copyright>Andres Ruiz © 2022</Copyright>
-    <PackageProjectUrl>https://github.com/andresruizdev/SimpleSerialManager</PackageProjectUrl>
+    <PackageProjectUrl>https://andresruiz.dev/simple-serial-manager/</PackageProjectUrl>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <RepositoryUrl>https://github.com/andresruizdev/SimpleSerialManager</RepositoryUrl>
+    <PackageTags>serial;serialport;uart;communication</PackageTags>
+    <PackageReleaseNotes>v1.0.1
+Add license</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.IO.Ports" Version="6.0.0" />
+    <PackageReference Include="System.IO.Ports" Version="7.0.0" />
   </ItemGroup>
 
 </Project>
