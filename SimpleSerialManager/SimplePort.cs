@@ -3,25 +3,19 @@ using System.IO.Ports;
 
 namespace SimpleSerialManager
 {
-    public class SimplePort
+    public class SimplePort : SerialPort
     {
-        SerialPort SerialPort = new SerialPort();
 
         public event EventHandler<ReceivedDataEventArgs> OnDataReceived;
 
-        public bool IsOpen
-        {
-            get => SerialPort.IsOpen;
-        }
-
         public static string[] GetAvailablePorts()
         {
-            return SerialPort.GetPortNames();
+            return GetPortNames();
         }
 
         public static List<string> GetAvailablePortsList()
         {
-            return SerialPort.GetPortNames().ToList();
+            return GetPortNames().ToList();
         }
 
         public bool Open(string portName, int bauds)
@@ -29,22 +23,22 @@ namespace SimpleSerialManager
             var avaiblePortsList = GetAvailablePortsList();
             if (avaiblePortsList.Contains(portName))
             {
-                SerialPort.PortName = portName;
-                SerialPort.BaudRate = bauds;
-                SerialPort.DataBits = 8;
-                SerialPort.StopBits = StopBits.One;
-                SerialPort.DataReceived += SerialPort_DataReceived;
-                SerialPort.ReadTimeout = 500;
-                SerialPort.WriteTimeout = 500;
-                SerialPort.Open();
+                PortName = portName;
+                BaudRate = bauds;
+                DataBits = 8;
+                StopBits = StopBits.One;
+                DataReceived += SerialPort_DataReceived;
+                ReadTimeout = 500;
+                WriteTimeout = 500;
+                Open();
                 if (IsOpen)
                 {
-                    Debug.WriteLine($"Se abrió correctamente el puerto {portName}");
+                    Debug.WriteLine($"{portName} open successfully");
                     return true;
                 }
 
             }
-            Debug.WriteLine($"No se pudo abrir el puerto {portName}");
+            Debug.WriteLine($"Cannot open port with name {portName}");
             return false;
 
         }
@@ -54,22 +48,22 @@ namespace SimpleSerialManager
             var avaiblePortsList = GetAvailablePortsList();
             if (avaiblePortsList.Contains(portName))
             {
-                SerialPort.PortName = portName;
-                SerialPort.BaudRate = 9600;
-                SerialPort.DataBits = 8;
-                SerialPort.StopBits = StopBits.One;
-                SerialPort.DataReceived += SerialPort_DataReceived;
-                SerialPort.ReadTimeout = 500;
-                SerialPort.WriteTimeout = 500;
-                SerialPort.Open();
+                PortName = portName;
+                BaudRate = 9600;
+                DataBits = 8;
+                StopBits = StopBits.One;
+                DataReceived += SerialPort_DataReceived;
+                ReadTimeout = 500;
+                WriteTimeout = 500;
+                Open();
                 if (IsOpen)
                 {
-                    Debug.WriteLine($"Se abrió correctamente el puerto {portName}");
+                    Debug.WriteLine($"{portName} open successfully");
                     return true;
                 }
 
             }
-            Debug.WriteLine($"No se pudo abrir el puerto {portName}");
+            Debug.WriteLine($"Cannot open port with name {portName}");
             return false;
 
         }
@@ -79,22 +73,22 @@ namespace SimpleSerialManager
             var avaiblePortsList = GetAvailablePortsList();
             if (avaiblePortsList.Contains(portName))
             {
-                SerialPort.PortName = portName;
-                SerialPort.BaudRate = bauds;
-                SerialPort.DataBits = dataBits;
-                SerialPort.StopBits = StopBits.One;
-                SerialPort.DataReceived += SerialPort_DataReceived;
-                SerialPort.ReadTimeout = 500;
-                SerialPort.WriteTimeout = 500;
-                SerialPort.Open();
+                PortName = portName;
+                BaudRate = bauds;
+                DataBits = dataBits;
+                StopBits = StopBits.One;
+                DataReceived += SerialPort_DataReceived;
+                ReadTimeout = 500;
+                WriteTimeout = 500;
+                Open();
                 if (IsOpen)
                 {
-                    Debug.WriteLine($"Se abrió correctamente el puerto {portName}");
+                    Debug.WriteLine($"{portName} open successfully");
                     return true;
                 }
 
             }
-            Debug.WriteLine($"No se pudo abrir el puerto {portName}");
+            Debug.WriteLine($"Cannot open port with name {portName}");
             return false;
 
         }
@@ -104,22 +98,22 @@ namespace SimpleSerialManager
             var avaiblePortsList = GetAvailablePortsList();
             if (avaiblePortsList.Contains(portName))
             {
-                SerialPort.PortName = portName;
-                SerialPort.BaudRate = bauds;
-                SerialPort.DataBits = dataBits;
-                SerialPort.StopBits = (StopBits)stopBits;
-                SerialPort.DataReceived += SerialPort_DataReceived;
-                SerialPort.ReadTimeout = 500;
-                SerialPort.WriteTimeout = 500;
-                SerialPort.Open();
+                PortName = portName;
+                BaudRate = bauds;
+                DataBits = dataBits;
+                StopBits = (StopBits)stopBits;
+                DataReceived += SerialPort_DataReceived;
+                ReadTimeout = 500;
+                WriteTimeout = 500;
+                Open();
                 if (IsOpen)
                 {
-                    Debug.WriteLine($"Se abrió correctamente el puerto {portName}");
+                    Debug.WriteLine($"{portName} open successfully");
                     return true;
                 }
 
             }
-            Debug.WriteLine($"No se pudo abrir el puerto {portName}");
+            Debug.WriteLine($"Cannot open port with name {portName}");
             return false;
 
         }
@@ -129,11 +123,11 @@ namespace SimpleSerialManager
         {
             if (IsOpen)
             {
-                int ReceivedBytes = SerialPort.BytesToRead;
+                int ReceivedBytes = BytesToRead;
                 byte[] ReceivedDataBytes = new byte[ReceivedBytes];
-                SerialPort.Read(ReceivedDataBytes, 0, ReceivedDataBytes.Length);
+                Read(ReceivedDataBytes, 0, ReceivedDataBytes.Length);
                 var ReceivedData = System.Text.Encoding.Default.GetString(ReceivedDataBytes);
-                Debug.Write($"{ReceivedBytes} bytes received from {SerialPort.PortName}: {ReceivedData}");
+                Debug.Write($"{ReceivedBytes} bytes received from {PortName}: {ReceivedData}");
                 OnDataReceived?.Invoke(this, new ReceivedDataEventArgs(ReceivedBytes, ReceivedData, ReceivedDataBytes));
             }
         }
@@ -141,31 +135,36 @@ namespace SimpleSerialManager
         public void Close()
         {
             if (IsOpen)
-            {   //TODO: Remove delegate for received data before closing port
-                SerialPort.DataReceived -= SerialPort_DataReceived;
-                SerialPort.Close();
+            {   
+                DataReceived -= SerialPort_DataReceived;
+                base.Close();
+                Debug.WriteLine($"Port closed successfully");
+            }
+            else
+            {
+                Debug.WriteLine($"Port is already closed");
             }
             
         }
 
         public void SendLine(string data)
         {
-            SerialPort.WriteLine(data);
+            WriteLine(data);
         }
 
         public void Send(byte[] buffer, int offset, int count)
         {
-            SerialPort.Write(buffer, offset, count);
+            Write(buffer, offset, count);
         }
 
         public void Send(char[] buffer, int offset, int count)
         {
-            SerialPort.Write(buffer, offset, count);
+            Write(buffer, offset, count);
         }
 
         public void Send(string data)
         {
-            SerialPort.Write(data);
+            Write(data);
         }
     }
 }
